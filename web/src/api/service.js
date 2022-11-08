@@ -11,6 +11,8 @@ import qs from 'qs'
  */
 axios.defaults.retry = 1
 axios.defaults.retryDelay = 1000
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
+axios.defaults.withCredentials = true
 
 export function getErrorMessage (msg) {
   if (typeof msg === 'string') {

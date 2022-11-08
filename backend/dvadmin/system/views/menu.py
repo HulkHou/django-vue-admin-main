@@ -152,6 +152,7 @@ class MenuViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
     create_serializer_class = MenuCreateSerializer

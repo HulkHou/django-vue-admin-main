@@ -438,6 +438,7 @@ class ReportOutputvalue(CoreModel):
     output_value_lowest = models.FloatField(max_length=64, verbose_name="月度产值-保底计划", help_text="月度产值-保底计划")
     output_value_target = models.FloatField(max_length=64, verbose_name="月度产值-力争计划", help_text="月度产值-力争计划")
     output_value_actual = models.FloatField(max_length=64, verbose_name="月度产值-实际", help_text="月度产值-实际")
+    output_value_last_year = models.FloatField(max_length=64, verbose_name="累计产值-2021", help_text="累计产值-2021")
 
     class Meta:
         db_table = table_prefix + "report_outputvalue"

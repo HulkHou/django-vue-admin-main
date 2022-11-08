@@ -31,6 +31,7 @@ class MenuButtonViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = MenuButton.objects.all()
     serializer_class = MenuButtonSerializer
     extra_filter_backends = []

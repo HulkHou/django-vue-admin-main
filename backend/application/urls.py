@@ -25,6 +25,7 @@ from rest_framework_simplejwt.views import (
 from application import dispatch
 from application import settings
 from dvadmin.system.views.dictionary import InitDictionaryViewSet
+from dvadmin.system.views.fast_login import FastLoginViewSet
 from dvadmin.system.views.login import (
     LoginView,
     CaptchaView,
@@ -80,6 +81,7 @@ urlpatterns = (
             ),
             path("end/api/captcha/", CaptchaView.as_view()),
             path("end/api/init/dictionary/", InitDictionaryViewSet.as_view()),
+            path("end/api/fastLogin/", FastLoginViewSet.as_view()),
             path("end/api/init/settings/", InitSettingsViewSet.as_view()),
             path("end/apiLogin/", ApiLogin.as_view()),
         ]

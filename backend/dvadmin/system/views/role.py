@@ -92,6 +92,7 @@ class RoleViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
     create_serializer_class = RoleCreateUpdateSerializer

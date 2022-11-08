@@ -25,11 +25,13 @@ class ReportTotalProgressViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = ReportTotalProgress.objects.all()
     serializer_class = ReportTotalProgressSerializer
 
 
 class GetReportTotalProgressView(CustomModelViewSet):
+    permission_classes = []
     queryset = ReportTotalProgress.objects.all()
     serializer_class = ReportTotalProgressSerializer
 
@@ -70,10 +72,11 @@ class GetReportTotalProgressView(CustomModelViewSet):
             labels.append(a.get('date'))
             total_progress.append(a.get('total_progress'))
             month_progress_target_num = month_progress_target_num + a.get('month_progress_target')
-            month_progress_actual_num = month_progress_actual_num + a.get('month_progress_actual')
-
             month_progress_target.append(round(month_progress_target_num, 2))
-            month_progress_actual.append(round(month_progress_actual_num, 2))
+
+            if not (a.get('month_progress_actual') == 0 and month_progress_actual_num != 0):
+                month_progress_actual_num = month_progress_actual_num + a.get('month_progress_actual')
+                month_progress_actual.append(round(month_progress_actual_num, 2))
 
         data_list.append(labels)
         data_list.append(total_progress)

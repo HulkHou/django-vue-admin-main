@@ -41,7 +41,7 @@ export function AddObj (obj) {
 export function UpdateObj (obj) {
   return request({
     url: urlPrefix + obj.id + '/',
-    method: 'put',
+    method: 'post',
     data: obj
   })
 }

@@ -16,6 +16,7 @@ from dvadmin.system.views.system_config import SystemConfigViewSet
 from dvadmin.system.views.user import UserViewSet
 
 system_url = routers.SimpleRouter()
+system_url.routes[2].mapping['post'] = 'update'
 system_url.register(r'menu', MenuViewSet)
 system_url.register(r'menu_button', MenuButtonViewSet)
 system_url.register(r'role', RoleViewSet)
@@ -27,7 +28,7 @@ system_url.register(r'area', AreaViewSet)
 system_url.register(r'file', FileViewSet)
 system_url.register(r'api_white_list', ApiWhiteListViewSet)
 system_url.register(r'system_config', SystemConfigViewSet)
-system_url.register(r'message_center',MessageCenterViewSet)
+system_url.register(r'message_center', MessageCenterViewSet)
 
 urlpatterns = [
     path('user/export/', UserViewSet.as_view({'post': 'export_data', })),
@@ -39,5 +40,19 @@ urlpatterns = [
     path('login_log/', LoginLogViewSet.as_view({'get': 'list'})),
     path('login_log/<int:pk>/', LoginLogViewSet.as_view({'get': 'retrieve'})),
     path('dept_lazy_tree/', DeptViewSet.as_view({'get': 'dept_lazy_tree'})),
+
+    path('menu/<int:pk>/', MenuViewSet.as_view({'post': 'update'})),
+    path('menu_button/<int:pk>/', MenuButtonViewSet.as_view({'post': 'update'})),
+    path('role/<int:pk>/', RoleViewSet.as_view({'post': 'update'})),
+    path('dept/<int:pk>/', DeptViewSet.as_view({'post': 'update'})),
+    path('user/<int:pk>/', UserViewSet.as_view({'post': 'update'})),
+    path('operation_log/<int:pk>/', OperationLogViewSet.as_view({'post': 'update'})),
+    path('dictionary/<int:pk>/', DictionaryViewSet.as_view({'post': 'update'})),
+    path('area/<int:pk>/', AreaViewSet.as_view({'post': 'update'})),
+    path('file/<int:pk>/', FileViewSet.as_view({'post': 'update'})),
+    path('api_white_list/<int:pk>/', ApiWhiteListViewSet.as_view({'post': 'update'})),
+    path('system_config/<int:pk>/', SystemConfigViewSet.as_view({'post': 'update'})),
+    path('message_center/<int:pk>/', MessageCenterViewSet.as_view({'post': 'update'})),
+
 ]
 urlpatterns += system_url.urls

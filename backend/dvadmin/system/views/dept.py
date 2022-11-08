@@ -105,6 +105,7 @@ class DeptViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = Dept.objects.all()
     serializer_class = DeptSerializer
     create_serializer_class = DeptCreateUpdateSerializer

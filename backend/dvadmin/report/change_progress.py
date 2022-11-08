@@ -25,11 +25,14 @@ class ReportChangeProgressViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
+
     queryset = ReportChangeProgress.objects.all()
     serializer_class = ReportChangeProgressSerializer
 
 
 class GetReportChangeProgressView(CustomModelViewSet):
+    permission_classes = []
     queryset = ReportChangeProgress.objects.all()
     serializer_class = ReportChangeProgressSerializer
 

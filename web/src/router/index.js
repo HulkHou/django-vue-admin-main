@@ -8,8 +8,6 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import mapActions from 'vuex'
-
 // 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -18,7 +16,7 @@ import store from '@/store/index'
 import util from '@/libs/util.js'
 // 路由数据
 import routes from './routes'
-import { getMenu, handleAsideMenu, handleRouter, checkRouter } from '@/menu'
+import { getMenu, handleAsideMenu, handleRouter, checkRouter, fastLogin } from '@/menu'
 
 // fix vue-router NavigationDuplicated
 const VueRouterPush = VueRouter.prototype.push
@@ -92,40 +90,43 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    store.dispatch('d2admin/account/login', {
-      username: 'superadmin',
-      password: 'a66abb5684c45962d887564f08346e8d'
-    }).then(() => {
-      getMenu().then(ret => {
-        // 校验路由是否有效
-        ret = checkRouter(ret)
-        const routes = handleRouter(ret)
-        // 处理路由 得到每一级的路由设置
-        store.commit('d2admin/page/init', routes)
-
-        router.addRoutes(routes)
-        // routes.forEach(route => router.addRoute(route))
-
-        const menu = handleAsideMenu(ret)
-        const aside = handleAsideMenu(ret.filter(value => value.visible === true))
-        store.commit('d2admin/menu/asideSet', aside) // 设置侧边栏菜单
-        store.commit('d2admin/search/init', menu) // 设置搜索
-        next({
-          path: to.fullPath,
-          replace: true,
-          params: to.params
-        })
-      })
-      // 重定向对象不存在则返回顶层路径
-      // this.$router.replace(this.$route.query.redirect || '/')
-    })
-      .catch((err) => {
-        console.log(err)
-      })
-
     // 没有登录的时候跳转到登录界面
     // 携带上登陆成功之后需要跳转的页面完整路径
     // https://github.com/d2-projects/d2-admin/issues/138
+    // eslint-disable-next-line no-unused-vars
+    const username = 'superuser'
+    fastLogin().then(ret => {
+      store.dispatch('d2admin/account/login', {
+        username: ret,
+        password: 'a66abb5684c45962d887564f08346e8d'
+      }).then(() => {
+        getMenu().then(ret => {
+          // 校验路由是否有效
+          ret = checkRouter(ret)
+          const routes = handleRouter(ret)
+          // 处理路由 得到每一级的路由设置
+          store.commit('d2admin/page/init', routes)
+
+          router.addRoutes(routes)
+          // routes.forEach(route => router.addRoute(route))
+
+          const menu = handleAsideMenu(ret)
+          const aside = handleAsideMenu(ret.filter(value => value.visible === true))
+          store.commit('d2admin/menu/asideSet', aside) // 设置侧边栏菜单
+          store.commit('d2admin/search/init', menu) // 设置搜索
+          next({
+            path: to.fullPath,
+            replace: true,
+            params: to.params
+          })
+        })
+        // 重定向对象不存在则返回顶层路径
+        // this.$router.replace(this.$route.query.redirect || '/')
+      })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
     // if (whiteList.indexOf(to.path) !== -1) {
     //   // 在免登录白名单，直接进入
     //   next()

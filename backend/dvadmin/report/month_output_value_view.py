@@ -44,6 +44,7 @@ class ReportMonthOutputvalueViewSet(CustomModelViewSet):
 
 
 class GetReportMonthOutputvalueView(CustomModelViewSet):
+    permission_classes = []
     queryset = ReportOutputvalue.objects.all()
     serializer_class = ReportOutputvalueSerializer
 
@@ -178,6 +179,7 @@ class GetReportMonthOutputvalueView(CustomModelViewSet):
                 output_value_lowest=Sum('output_value_lowest'),
                 output_value_target=Sum('output_value_target'),
                 output_value_actual=Sum('output_value_actual'),
+                output_value_last_year=Sum('output_value_last_year'),
                 section_name=Count('section_name')).order_by(
                 'month')
 
@@ -189,14 +191,16 @@ class GetReportMonthOutputvalueView(CustomModelViewSet):
         output_value_lowest = []
         output_value_target = []
         output_value_actual = []
+        output_value_last_year = []
         data_list = []
 
         for index in range(len(output_value_list)):
             a = output_value_list[index]
             labels.append(a.get('month'))
-            output_value_lowest.append(a.get('output_value_lowest'))
-            output_value_target.append(a.get('output_value_target'))
-            output_value_actual.append(a.get('output_value_actual'))
+            output_value_lowest.append(round(a.get('output_value_lowest'), 2))
+            output_value_target.append(round(a.get('output_value_target'), 2))
+            output_value_actual.append(round(a.get('output_value_actual'), 2))
+            output_value_last_year.append(round(a.get('output_value_last_year'), 2))
 
         output_value_lowest_sum = []
         output_value_target_sum = []
@@ -214,13 +218,15 @@ class GetReportMonthOutputvalueView(CustomModelViewSet):
 
             output_value_lowest_sum.append(round(output_value_lowest_num, 2))
             output_value_target_sum.append(round(output_value_target_num, 2))
-            output_value_actual_sum.append(round(output_value_actual_num, 2))
+            if not (a.get('output_value_actual') == 0 and output_value_actual_num != 0):
+                output_value_actual_sum.append(round(output_value_actual_num, 2))
 
         data_list.append(labels)
         data_list.append(output_value_lowest)
         data_list.append(output_value_target)
         data_list.append(output_value_actual)
-        data_list.append(output_value_lowest_sum)
+        # data_list.append(output_value_lowest_sum)
+        data_list.append(output_value_last_year)
         data_list.append(output_value_target_sum)
         data_list.append(output_value_actual_sum)
 

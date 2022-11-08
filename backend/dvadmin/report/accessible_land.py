@@ -25,19 +25,19 @@ class ReportAccessibleLandViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = ReportAccessibleLand.objects.all()
     serializer_class = ReportAccessibleLandSerializer
 
 
 class GetReportAccessibleLandView(CustomModelViewSet):
     # authentication_classes = []
-    # permission_classes = []
+    permission_classes = []
     queryset = ReportAccessibleLand.objects.all()
     serializer_class = ReportAccessibleLandSerializer
 
     def get_report_accessible_land_list(self, request, *args, **kwargs):
-        section_name = self.request.query_params.get('section_name')
-        date = self.request.query_params.getlist('date')
+        land_section = self.request.query_params.get('land_section')
 
         landSectionDict = {
             'A': "A段",
@@ -51,8 +51,7 @@ class GetReportAccessibleLandView(CustomModelViewSet):
             3: "未交付土地"
         }
 
-        queryset = self.get_queryset()
-
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True, request=request)
 
         accessible_land_list = serializer.data
@@ -64,7 +63,7 @@ class GetReportAccessibleLandView(CustomModelViewSet):
 
         for index in range(len(accessible_land_list)):
             a = accessible_land_list[index]
-            land_section.append(landSectionDict.get(a.get('land_section'), "Invalid landSectionDict"))
+            land_section.append(a.get('land_section'))
             land_code.append(a.get('land_code'))
             status.append(statusDict.get(a.get('status'), "Invalid status"))
 

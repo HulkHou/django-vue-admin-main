@@ -1,8 +1,8 @@
 export const crudOptions = (vm) => {
   return {
     columns: [{
-      title: '分部',
-      key: 'section_name',
+      title: '标段',
+      key: 'land_section',
       sortable: true,
       search: {
         disabled: false
@@ -11,64 +11,33 @@ export const crudOptions = (vm) => {
       type: 'select',
       dict: {
         data: [{
-          value: 's1',
-          label: '一分部'
+          value: 'CH0-45',
+          label: 'CH0-45'
         }, {
-          value: 's2',
-          label: '二分部'
+          value: 'CH45-120',
+          label: 'CH45-120'
         }, {
-          value: 's3',
-          label: '三分部'
+          value: 'CH120-215',
+          label: 'CH120-215'
         }, {
-          value: 's4',
-          label: '四分部'
+          value: 'CH215-325',
+          label: 'CH215-325'
         }, {
-          value: 's5',
-          label: '五分部'
+          value: 'CH325-426',
+          label: 'CH325-426'
         }, {
-          value: 's6',
-          label: '六分部'
+          value: 'CH426-508',
+          label: 'CH426-508'
         }, {
-          value: 's7',
-          label: '七分部'
-        }, {
-          value: 's8',
-          label: '八分部'
-        }, {
-          value: 's9',
-          label: '九分部'
-        }, {
-          value: 's10',
-          label: '十分部'
-        }, {
-          value: 's11',
-          label: '十一分部'
+          value: 'CH508-523',
+          label: 'CH508-523'
         }]
       },
       form: {
         value: true,
         component: {
           span: 12,
-          placeholder: '请选择分部'
-        }
-      }
-    }, {
-      title: '日期',
-      key: 'date',
-      width: 160,
-      search: {
-        disabled: false,
-        width: 400,
-        component: { // 查询框组件配置，默认根据form配置生成
-          name: 'el-date-picker',
-          props: {
-            type: 'monthrange',
-            'range-separator': '至',
-            'start-placeholder': '开始日期',
-            'end-placeholder': '结束日期',
-            format: 'yyyy-MM',
-            valueFormat: 'yyyy-MM'
-          }
+          placeholder: '请选择标段'
         }
       }
     }].concat(vm.commonEndColumns())

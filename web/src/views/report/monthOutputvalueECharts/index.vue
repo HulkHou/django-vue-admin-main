@@ -33,7 +33,7 @@ export default {
     pageRequest (query) {
       api.GetReportMonthOutputvalueList(query).then(res => {
         const labels = res.data[0]
-        const outputValueLowest = res.data[1]
+        // const outputValueLowest = res.data[1]
         const outputValueTarget = res.data[2]
         const outputValueActual = res.data[3]
         const outputValueLowestSum = res.data[4]
@@ -46,7 +46,7 @@ export default {
         var myChart = this.$echarts.init(document.getElementById('main'))
 
         // 指定图表的配置项和数据
-        const colors = ['#5470C6', '#91CC75', '#EE6666', '#800080', '#FFFF00', '#67E0E3']
+        const colors = ['#91CC75', '#5470C6', '#EE6666', '#91CC75', '#5470C6']
         var option = {
           color: colors,
           title: {
@@ -76,7 +76,7 @@ export default {
             }
           },
           legend: {
-            data: ['月度产值-保底计划', '月度产值-力争计划', '月度产值-实际', '累计产值-保底计划', '累计产值-力争计划', '累计产值-实际']
+            data: ['月度产值-保底计划', '月度产值-计划', '月度产值-实际', '2021年累计产值（倍增）', '累计产值-计划', '累计产值-实际']
           },
           xAxis: [
             {
@@ -128,33 +128,41 @@ export default {
             }
           ],
           series: [
+            // {
+            //   name: '月度产值-保底计划',
+            //   type: 'bar',
+            //   yAxisIndex: 1,
+            //   data: outputValueLowest
+            // },
             {
-              name: '月度产值-保底计划',
+              name: '月度产值-计划',
               type: 'bar',
               yAxisIndex: 1,
-              data: outputValueLowest
-            },
-            {
-              name: '月度产值-力争计划',
-              type: 'bar',
-              yAxisIndex: 1,
+              label: {
+                show: true,
+                position: 'top'
+              },
               data: outputValueTarget
             },
             {
               name: '月度产值-实际',
               type: 'bar',
               yAxisIndex: 1,
+              label: {
+                show: true,
+                position: 'top'
+              },
               data: outputValueActual
             },
             {
-              name: '累计产值-保底计划',
+              name: '2021年累计产值（倍增）',
               type: 'line',
               yAxisIndex: 0,
               smooth: true,
               data: outputValueLowestSum
             },
             {
-              name: '累计产值-力争计划',
+              name: '累计产值-计划',
               type: 'line',
               yAxisIndex: 0,
               smooth: true,

@@ -48,6 +48,7 @@ class OutputvalueViewSet(CustomModelViewSet):
     retrieve:单例
     destroy:删除
     """
+    permission_classes = []
     queryset = ReportOutputvalue.objects.all()
     serializer_class = OutputvalueSerializer
     create_serializer_class = OutputvalueCreateUpdateSerializer

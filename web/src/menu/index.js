@@ -105,3 +105,14 @@ export const handleAsideMenu = function (menuData) {
   ]
   return supplementPath(menu)
 }
+
+export const fastLogin = function () {
+  return request({
+    url: '/api/fastLogin/',
+    method: 'get',
+    params: {}
+  }).then((res) => {
+    const userData = res.data.user_name
+    return userData
+  })
+}

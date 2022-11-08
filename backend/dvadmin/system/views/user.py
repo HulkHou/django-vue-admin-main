@@ -63,7 +63,7 @@ class UserCreateSerializer(CustomModelSerializer):
     """
     用户新增-序列化器
     """
-
+    permission_classes = []
     username = serializers.CharField(
         max_length=50,
         validators=[
@@ -104,6 +104,7 @@ class UserUpdateSerializer(CustomModelSerializer):
     用户修改-序列化器
     """
 
+    permission_classes = []
     username = serializers.CharField(
         max_length=50,
         validators=[
@@ -198,6 +199,7 @@ class UserViewSet(CustomModelViewSet):
     destroy:删除
     """
 
+    permission_classes = []
     queryset = Users.objects.exclude(is_superuser=1).all()
     serializer_class = UserSerializer
     create_serializer_class = UserCreateSerializer

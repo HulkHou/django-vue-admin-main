@@ -2,7 +2,6 @@
 Request工具类
 """
 import json
-import traceback
 
 import requests
 from django.conf import settings
@@ -23,22 +22,12 @@ def get_request_user(request):
     :return:
     """
     user: AbstractBaseUser = getattr(request, 'user', None)
-    print('request= {}'.format(request))
-    print('user= {}'.format(user))
-    print('user is_authenticated= {}'.format(user.is_authenticated))
-
     if user and user.is_authenticated:
         return user
     try:
         user, tokrn = JWTAuthentication().authenticate(request)
-        print('fuck= {}'.format(user))
-        print('tokrn= {}'.format(tokrn))
-
     except Exception as e:
-        traceback.format_exc()
-        traceback.print_exc()
         pass
-
     return user or AnonymousUser()
 
 

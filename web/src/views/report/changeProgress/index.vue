@@ -45,7 +45,7 @@ export default {
         const symbolSize = 6
 
         // 指定图表的配置项和数据
-        const colors = ['#5470C6', '#91CC75', '#EE6666', '#800080', '#FFFF00', '#67E0E3']
+        const colors = ['#91CC75', '#5470C6', '#EE6666', '#800080', '#FFFF00', '#67E0E3']
         var option = {
           color: colors,
           title: {
